@@ -5,11 +5,6 @@ var socket = io();  // initiating requests from the client to the server and kee
 // built-in event listeners
 socket.on('connect', function() {
     console.log('Connected to server.');
-
-    socket.emit('createMessage', {
-        from: 'Mello',
-        text: 'Hey!'
-    })
 });
 
 socket.on('disconnect', function() {

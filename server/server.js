@@ -18,23 +18,19 @@ io.on('connection', (socket) => {
     // socket.emit : sending msg to client (sending msg)
     // socket.on : receiving msg from client (listening to inc. msgs)
 
-    
-    socket.emit('newMessage',{
-        from: 'Mouad',
-        text: 'Hello world',
-        createdAt: '123'
+    socket.on('createMessage', (message) => {
+        console.log('Create Message (received from client): ', message);
+        io.emit('newMessage', { // emit msg to all sockets
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        }); 
     });
 
-    socket.on('createMessage', (newMessage) => {
-        console.log('Create Message (received from client): ', newMessage);
-    });
-    
     socket.on('disconnect', () => {
         console.log('User of id ' + socket.id + ' disconnected.');
     });
 }); 
-
-
 
 server.listen(port, () => {    // createServer is implicit in listen comand
     console.log('Listening to port ' + port);
