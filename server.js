@@ -9,7 +9,7 @@ console.log(publicPath);
 app.use(express.static(publicPath));
 
 app.get('/', (req, res) => {
-    res.sendFile('../public/index.html');
+    res.sendFile('index.html');
 });
 
 app.listen(port, () => {
