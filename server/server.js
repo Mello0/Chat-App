@@ -8,6 +8,10 @@ const port = process.env.PORT || 3000;  // for heroku
 console.log(publicPath);
 app.use(express.static(publicPath));
 
+app.get('/', (req, res) => {
+    res.sendFile('../public/index.html');
+});
+
 app.listen(port, () => {
     console.log('Listening to port ' + port);
 });
