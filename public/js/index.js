@@ -15,3 +15,7 @@ socket.on('disconnect', function() {
 socket.on('newMessage', function(newMessage){
     console.log('Message received: ', newMessage);
 });
+
+socket.emit('createMessage', function() {
+
+});
