@@ -16,7 +16,6 @@ var io = socketIO(server);      // param = server in which to use socketio
 
 // register event listeners
 io.on('connection', (socket) => {
-    console.log('User connected, id: ' + socket.id);
     // socket.emit : sending msg to client (sending msg)
     // socket.on : receiving msg from client (listening to inc. msgs)
 
@@ -26,10 +25,11 @@ io.on('connection', (socket) => {
     // User joined message broadcasted
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => { // callback is for acknowl.
         console.log('Create Message (received from client): ', message);
     
         io.emit('newMessage', generateMessage(message.from, message.text)); 
+        callback('This was sent from the server'); // acknowledg. the request, will send the event back to the front-end and call the function
     });
 
     socket.on('disconnect', () => {

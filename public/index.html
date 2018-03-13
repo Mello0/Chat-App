@@ -10,9 +10,24 @@
     <h1>Hello World</h1>
     <p>Testing Heroku deployment after changes</p>
 
+    <!-- Messages -->
+    <ol id="messages"></ol>
 
-    <script src="socket.io/socket.io.js"></script> <!-- loading external socket.io module commands on the front-end -->
-    <!-- Front-end script -->
+
+    <form id="message-form">
+        <input type="text" name="message" placeholder="Message..">
+        <button>Send</button>
+    </form>
+
+
+
+    <!-- Scripts -->
+
+    <!-- jQuery -->
+    <script src="js/libs/jquery-3.3.1.min.js"></script>
+    <!-- loading external socket.io module commands on the front-end -->
+    <script src="socket.io/socket.io.js"></script> 
+    <!-- Front-end scripts -->
     <script src="js/index.js"></script>
 </body>
 </html>

@@ -12,10 +12,21 @@ socket.on('disconnect', function() {
 });
 
 // custom event listeners
-socket.on('newMessage', function(newMessage){
-    console.log('Message received: ', newMessage);
+socket.on('newMessage', function(message){
+    console.log('Message received: ', message);
+    var li = jQuery('<li></li>'); // create li element
+    li.text(message.from + ': ' + message.text);
+    jQuery('#messages').append(li);
 });
 
-socket.emit('createMessage', function() {
+// select message-form
+jQuery('#message-form').on('submit', function(e) {
+    e.preventDefault(); // prevent default submit event
 
+    socket.emit('createMessage', {
+        from: 'User',
+        text: jQuery('[name=message]').val()
+    }, function(message) {
+        console.log('Got it. ', message);
+    });
 });
