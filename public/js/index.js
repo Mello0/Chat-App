@@ -13,9 +13,12 @@ socket.on('disconnect', function() {
 
 // custom event listeners
 socket.on('newMessage', function(message){
+    var formattedTime = moment(message.createdAt).format('h:mm a');
+
     console.log('Message received: ', message);
+    console.log('Formatted time: ', formattedTime);
     var li = jQuery('<li></li>'); // create li element
-    li.text(message.from + ': ' + message.text);
+    li.text(message.from + ' ' + formattedTime + ' : ' + message.text);
     jQuery('#messages').append(li);
 });
 
@@ -23,10 +26,12 @@ socket.on('newMessage', function(message){
 jQuery('#message-form').on('submit', function(e) {
     e.preventDefault(); // prevent default submit event
 
+    var textMessage = jQuery('[name=message]');
+
     socket.emit('createMessage', {
         from: 'User',
-        text: jQuery('[name=message]').val()
+        text: textMessage.val()
     }, function(message) {
-        console.log('Got it. ', message);
+        textMessage.val('');
     });
 });

@@ -18,8 +18,7 @@ var io = socketIO(server);      // param = server in which to use socketio
 io.on('connection', (socket) => {
     // socket.emit : sending msg to client (sending msg)
     // socket.on : receiving msg from client (listening to inc. msgs)
-
-    // Welcome message from admin
+    
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the Chat App'));
 
     // User joined message broadcasted
@@ -29,7 +28,7 @@ io.on('connection', (socket) => {
         console.log('Create Message (received from client): ', message);
     
         io.emit('newMessage', generateMessage(message.from, message.text)); 
-        callback('This was sent from the server'); // acknowledg. the request, will send the event back to the front-end and call the function
+        callback(); // acknowledg. the request, will send the event back to the front-end and call the function
     });
 
     socket.on('disconnect', () => {
