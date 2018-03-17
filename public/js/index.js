@@ -2,6 +2,22 @@
 
 var socket = io();  // initiating requests from the client to the server and keep the connection open
 
+function scrollToBottom() {
+    // Selectors
+    var messages = jQuery('#messages');
+    var newMessage = messages.children('li:last-child'); // select the last list-item in the list
+    // Heights properties
+    var clientHeight = messages.prop('clientHeight');
+    var scrollTop = messages.prop('scrollTop');
+    var scrollHeight = messages.prop('scrollHeight');
+    var newMessageHeight = newMessage.innerHeight();
+    var lastMessageHeight = newMessage.prev().innerHeight(); // previous list-item
+
+    if(scrollTop + clientHeight + newMessageHeight + lastMessageHeight >= scrollHeight) {
+        messages.scrollTop(scrollHeight);
+    }
+}
+
 // built-in event listeners
 socket.on('connect', function() {
     console.log('Connected to server.');
@@ -22,6 +38,7 @@ socket.on('newMessage', function(message){
     });
 
     jQuery('#messages').append(html);
+    scrollToBottom();
 });
 
 // select message-form
