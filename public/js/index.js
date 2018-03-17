@@ -1,4 +1,4 @@
-// FRONT-END SCRIPT 
+// FRONT-END SCRIPT
 
 var socket = io();  // initiating requests from the client to the server and keep the connection open
 
@@ -13,13 +13,15 @@ socket.on('disconnect', function() {
 
 // custom event listeners
 socket.on('newMessage', function(message){
+    var template = jQuery('#message-template').html();
     var formattedTime = moment(message.createdAt).format('h:mm a');
+    var html = Mustache.render(template, {
+        text: message.text,
+        from: message.from,
+        createdAt: formattedTime
+    });
 
-    console.log('Message received: ', message);
-    console.log('Formatted time: ', formattedTime);
-    var li = jQuery('<li></li>'); // create li element
-    li.text(message.from + ' ' + formattedTime + ' : ' + message.text);
-    jQuery('#messages').append(li);
+    jQuery('#messages').append(html);
 });
 
 // select message-form
